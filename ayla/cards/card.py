@@ -27,6 +27,7 @@ import uuid
 from ..errors import InvalidCharacteres
 
 from io import BytesIO
+from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 class RankCard:
@@ -53,16 +54,18 @@ class RankCard:
 
     def card1(self):
         try:
+            # things
+            path = str(Path(__file__).parent)
             avatar = Image.open(self.pfp)
             avatar = avatar.resize((170, 170))
             bg = Image.open(self.bg)
-            overlay = Image.open("assets/overlay1.png")
+            overlay = Image.open(path + "assets/overlay1.png")
             background = Image.new("RGBA", overlay.size)
             backgroundover = bg.resize((638, 159))
             background.paste(backgroundover, (0, 0))
             bg = background.resize(overlay.size)
             bg.paste(overlay, (0, 0), overlay)
-            myFont = ImageFont.truetype("assets/fonts/levelfont.otf", 40)            
+            myFont = ImageFont.truetype(path + "assets/fonts/levelfont.otf", 40)            
             draw = ImageDraw.Draw(bg)
 
             # draw nickname
@@ -75,7 +78,7 @@ class RankCard:
                 bar_exp = 50
             current_exp = _convert_number(self.current_xp)
             max_exp = _convert_number(self.xp_max)
-            myFont = ImageFont.truetype("assets/fonts/levelfont.otf", 30)
+            myFont = ImageFont.truetype(path + "assets/fonts/levelfont.otf", 30)
 
             # draw level
             draw.text((197, (327/2)+125), f"LEVEL - {self.level}",
@@ -86,7 +89,7 @@ class RankCard:
             
             # draw avatar
             mask_im = Image.open(
-                "assets/mask_circle.jpg").convert('L').resize((170, 170))
+                path + "assets/mask_circle.jpg").convert('L').resize((170, 170))
             new = Image.new("RGB", avatar.size, (0, 0, 0))
             try:
                 new.paste(avatar, mask=avatar.convert("RGBA").split()[3])
@@ -101,7 +104,7 @@ class RankCard:
             draw.rounded_rectangle((0, 0, bar_exp, 50), 30, fill=self.bar_color)
             bg.paste(im, (190, 235))
             new = Image.new("RGBA", bg.size)
-            new.paste(bg, (0, 0), Image.open("assets/curvedoverlay.png").convert("L"))
+            new.paste(bg, (0, 0), Image.open(path + "assets/curvedoverlay.png").convert("L"))
             bg = new.resize((505, 259))
 
             final_img = str(uuid.uuid4()) + ".png"
@@ -114,6 +117,8 @@ class RankCard:
 
     def card2(self):
         try:
+            # things
+            path = str(Path(__file__).parent)
             avatar = Image.open(self.pfp)
             bg = Image.open(self.bg)
 
@@ -123,7 +128,7 @@ class RankCard:
             background = bg.resize((1000, 333))
             position = (420, 30)
             avatar = avatar.resize((160, 160))
-            mask = Image.open("assets/mask_circle.jpg").resize((160, 160))
+            mask = Image.open(path + "assets/mask_circle.jpg").resize((160, 160))
             new = Image.new("RGBA", avatar.size, (0, 0, 0))
             try:
                 new.paste(avatar, mask=avatar.convert("RGBA").split()[3])
@@ -133,8 +138,8 @@ class RankCard:
 
             # init
             draw = ImageDraw.Draw(background)
-            myFont = ImageFont.truetype("assets/fonts/rabbit.ttf", 50)
-            xp_level_font = ImageFont.truetype("assets/fonts/rabbit.ttf", 25)
+            myFont = ImageFont.truetype(path + "assets/fonts/rabbit.ttf", 50)
+            xp_level_font = ImageFont.truetype(path + "assets/fonts/rabbit.ttf", 25)
 
             # draw level
             combined = f"LEVEL: {self.level}"
@@ -173,6 +178,7 @@ class RankCard:
     def card3(self):
         try:
             # things
+            path = str(Path(__file__).parent)
             avatar = Image.open(self.pfp)
             bg = Image.open(self.bg)
 
@@ -180,7 +186,7 @@ class RankCard:
             background = bg.filter(ImageFilter.BLUR)
             background = bg.resize((1000, 333))
             avatar = avatar.resize((210, 210))
-            mask = Image.open("assets/mask_circle.jpg").resize((210, 210))
+            mask = Image.open(path + "assets/mask_circle.jpg").resize((210, 210))
             new = Image.new("RGBA", avatar.size, (0, 0, 0))
             try:
                 new.paste(avatar, mask=avatar.convert("RGBA").split()[3])
@@ -189,8 +195,8 @@ class RankCard:
             background.paste(new, (655, 115//2), mask.convert("L"))
 
             # fonts
-            myFont = ImageFont.truetype("assets/fonts/rabbit.ttf", 80)
-            xp_level_font = ImageFont.truetype("assets/fonts/rabbit.ttf", 25)
+            myFont = ImageFont.truetype(path + "assets/fonts/rabbit.ttf", 80)
+            xp_level_font = ImageFont.truetype(path + "assets/fonts/rabbit.ttf", 25)
 
             # init
             draw = ImageDraw.Draw(background)
