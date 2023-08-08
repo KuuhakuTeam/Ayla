@@ -124,7 +124,6 @@ class RankCard:
 
             # background
             W, H = (1000, 333)
-            bg = bg.filter(ImageFilter.BLUR)
             background = bg.resize((1000, 333))
             position = (420, 30)
             avatar = avatar.resize((160, 160))
@@ -183,7 +182,6 @@ class RankCard:
             bg = Image.open(self.bg)
 
             # background
-            background = bg.filter(ImageFilter.BLUR)
             background = bg.resize((1000, 333))
             avatar = avatar.resize((210, 210))
             mask = Image.open(path + "/assets/mask_circle.jpg").resize((210, 210))
